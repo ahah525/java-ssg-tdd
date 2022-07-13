@@ -47,6 +47,9 @@ public class App {
                 case "삭제":
                     remove(rq);
                     break;
+                case "수정":
+                    modify(rq);
+                    break;
                 case "종료":
                     break outer;    // outer 라벨이 붙은 곳에서 break
             }
@@ -67,6 +70,30 @@ public class App {
         // 명언 삭제
         wiseSayings.remove(foundWs);
         System.out.printf("%d번 명언이 삭제되었습니다.\n", id);
+    }
+
+    public void modify(Rq rq) {
+        int id = rq.getIntParam("id", 0);
+        if (id == 0) {
+            System.out.println("번호를 입력해주세요.");
+            return;
+        }
+        WiseSaying foundWs = findById(id);
+        if (foundWs == null) {
+            System.out.printf("%d번 명언은 존재하지 않습니다.\n", id);
+            return;
+        }
+        // 새로 명언, 작가 입력받기
+        System.out.printf("명언(기존) : %s", foundWs.getContent());
+        System.out.print("명언 : ");
+        String content = sc.nextLine();
+        System.out.printf("작가(기존) : %s", foundWs.getAuthor());
+        System.out.print("명언 : ");
+        String author = sc.nextLine();
+        // 명언 수정
+        foundWs.setContent(content);
+        foundWs.setAuthor(author);
+        System.out.printf("%d번 명언이 수정되었습니다.\n", id);
     }
 
     // id로 명언 조회
