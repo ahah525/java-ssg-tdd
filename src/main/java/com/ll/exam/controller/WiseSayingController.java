@@ -2,36 +2,35 @@ package com.ll.exam.controller;
 
 import com.ll.exam.Rq;
 import com.ll.exam.WiseSaying;
+import com.ll.exam.service.WiseSayingService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class WiseSayingController {
     private Scanner sc;
-    private int wiseSayingLastId;   // 가장 마지막으로 추가된 명언 글 번호
-    private List<WiseSaying> wiseSayings;   // 명언 리스트
+    private WiseSayingService wiseSayingService;    // 서비스
 
     public WiseSayingController(Scanner sc) {
         this.sc = sc;
-        wiseSayingLastId = 0;
-        wiseSayings = new ArrayList<>();
+        wiseSayingService = new WiseSayingService();
     }
 
     public void write(Rq rq) {
-        int id = ++wiseSayingLastId;
         System.out.println("명언 : ");
         String content = sc.nextLine();
         System.out.println("작가 : ");
         String author = sc.nextLine();
-        // 리스트에 WiseSaying 인스턴스 삽입
-        wiseSayings.add(new WiseSaying(id, content, author));
-        System.out.printf("%d번 명언이 등록되었습니다.\n", id);
+        // 명언 저장
+        WiseSaying wiseSaying = wiseSayingService.write(content, author);
+        System.out.printf("%d번 명언이 등록되었습니다.\n", wiseSaying.getId());
     }
 
     public void list(Rq rq) {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
+        // 모든 명언 조회
+        List<WiseSaying> wiseSayings = wiseSayingService.findAll();
         // 명언 최신순(역순) 출력
         for (int i = wiseSayings.size() - 1; i >= 0; i--) {
             WiseSaying ws = wiseSayings.get(i);
@@ -45,7 +44,7 @@ public class WiseSayingController {
             System.out.println("번호를 입력해주세요.");
             return;
         }
-        WiseSaying foundWs = findById(id);
+        WiseSaying foundWs = wiseSayingService.findById(id);
         if (foundWs == null) {
             System.out.printf("%d번 명언은 존재하지 않습니다.\n", id);
             return;
@@ -58,8 +57,7 @@ public class WiseSayingController {
         System.out.print("명언 : ");
         String author = sc.nextLine();
         // 명언 수정
-        foundWs.setContent(content);
-        foundWs.setAuthor(author);
+        wiseSayingService.modify(id, content, author);
         System.out.printf("%d번 명언이 수정되었습니다.\n", id);
     }
 
@@ -69,23 +67,15 @@ public class WiseSayingController {
             System.out.println("번호를 입력해주세요.");
             return;
         }
-        WiseSaying foundWs = findById(id);  // id로 조회한 명언
+        WiseSaying foundWs = wiseSayingService.findById(id);  // id로 조회한 명언
         // 해당 id에 대한 명언이 존재하지 않는 경우 예외 처리
         if (foundWs == null) {
             System.out.printf("%d번 명언은 존재하지 않습니다.\n", id);
             return;
         }
         // 명언 삭제
-        wiseSayings.remove(foundWs);
+        wiseSayingService.remove(id);
         System.out.printf("%d번 명언이 삭제되었습니다.\n", id);
     }
 
-    // id로 명언 조회
-    public WiseSaying findById(int id) {
-        for (WiseSaying ws : wiseSayings) {
-            if(ws.getId() == id)
-                return ws;
-        }
-        return null;
-    }
 }
