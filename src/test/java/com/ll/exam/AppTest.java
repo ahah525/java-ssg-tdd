@@ -32,6 +32,23 @@ public class AppTest {
     }
 
     @Test
+    public void 등록을_하면_생성된_명언의_번호가_출력되어야_한다() {
+        String rs = AppTestRunner.run("""
+                등록
+                나의 죽음을 적들에게 알리지 말라
+                이순신
+                등록
+                나에게 불가능이란 없다.
+                나폴레옹
+                종료
+                """);
+        // 등록 2번 수행 시, 생성된 명언의 번호가 맞게 출력되는지 검증
+        assertTrue(rs.contains("1번 명언이 등록되었습니다."));
+        assertTrue(rs.contains("2번 명언이 등록되었습니다."));
+
+    }
+
+    @Test
     public void 테스트() {
         assertTrue(1 == 1);
         assertEquals(1, 1);
