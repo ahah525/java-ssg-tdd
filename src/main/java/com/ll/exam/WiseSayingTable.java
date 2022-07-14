@@ -6,7 +6,7 @@ public class WiseSayingTable {
     public WiseSayingTable(String baseDir) {
         this.baseDir = baseDir;
     }
-    // 명언 객체를 파일에 저장하는 메서드
+    // ㄷ명언 객체를 파일에 저장하는 메서드
     public void save(WiseSaying wiseSaying) {
         // 해당 경로의 폴더 생성
         Util.file.mkdir("%s/wise_saying".formatted(baseDir));
@@ -24,12 +24,12 @@ public class WiseSayingTable {
         saveLastId(id); // 마지막 저장된 id 업데이트
     }
     // 파일에 마지막 명언 id를 저장하는 메서드
-    private void saveLastId(int id) {
+    public void saveLastId(int id) {
         // 마지막으로 저장된 명언 id 파일에 저장
         Util.file.saveToFile("%s/wise_saying/last_id.txt".formatted(baseDir), id + "");
     }
     // 파일에 저장된 마지막 명언 id를 읽어 반환하는 메서드
-    private int getLastId() {
+    public int getLastId() {
         // 파일에서 마지막으로 저장된 명언 id 읽어오기
         String lastId = Util.file.readFromFile("%s/wise_saying/last_id.txt".formatted(baseDir), "");
         // 저장된 명언이 없으면 0 리턴
