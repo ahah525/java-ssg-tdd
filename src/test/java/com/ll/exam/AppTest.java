@@ -38,7 +38,7 @@ public class AppTest {
         // 폴더 생성 후, 해당 path 파일에 body 쓰기
         Util.file.mkdir("test_data");
         Util.file.saveToFile("test_data/1.json", "안녕");
-        String body = Util.file.readFromFile("test_data/1.json");
+        String body = Util.file.readFromFile("test_data/1.json", "");
         // "안녕"과 파일에 저장된 내용이 동일한지 검증
         assertEquals("안녕", body);
     }
