@@ -14,7 +14,7 @@ public class WiseSayingRepository {
         wiseSayings = new ArrayList<>();
     }
 
-    public WiseSaying write(String content, String author) {
+    public WiseSaying add(String content, String author) {
         int id = ++wiseSayingLastId;
         WiseSaying wiseSaying = new WiseSaying(id, content, author);
         wiseSayings.add(wiseSaying);

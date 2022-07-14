@@ -15,7 +15,7 @@ public class WiseSayingService {
     // 명언 저장
     public WiseSaying write(String content, String author) {
         // 명언 메모리에 저장
-        return wiseSayingRepository.write(content, author);
+        return wiseSayingRepository.add(content, author);
     }
 
     // id로 명언 조회
