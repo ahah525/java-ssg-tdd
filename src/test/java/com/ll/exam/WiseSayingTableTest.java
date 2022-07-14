@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class WiseSayingTableTest {
@@ -30,5 +31,15 @@ public class WiseSayingTableTest {
         wiseSayingTable.save("자유가 아니면 죽음을 달라!", "패트릭 헨리");
         // 위에서 저장한 파일이 존재하는지 검증
         assertTrue(new File("test_data/wise_saying/%d.json".formatted(newId)).exists());
+    }
+
+    @Test
+    public void 조회() {
+        // 1번 명언 파일에서 조회하기
+        WiseSaying wiseSaying = wiseSayingTable.findById(1);
+        // 파일에 저장된 명언 정보가 맞는지 검증
+        assertEquals(1, wiseSaying.getId());
+        assertEquals("나에게 불가능이란 없다.", wiseSaying.getContent());
+        assertEquals("나폴레옹", wiseSaying.getAuthor());
     }
 }
